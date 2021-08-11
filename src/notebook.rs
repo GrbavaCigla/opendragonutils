@@ -9,6 +9,7 @@ pub struct Notebook {
     button_box: gtk::Box,
     notebook: gtk::Notebook,
     buttons: Rc<RefCell<Vec<gtk::ToggleButton>>>,
+    
 }
 
 impl Notebook {
@@ -34,13 +35,13 @@ impl Notebook {
         self.button_box.pack_start(&button, true, true, 2);
 
         let buttons = Rc::clone(&self.buttons);
-        button.connect_toggled(move |x| {
+        button.connect_clicked(move |x| {
             for i in buttons.borrow().iter() {
-                i.set_active(false);
+                if x != i && i.is_active() == true {
+                    i.set_active(false);
+                }
             }
-            x.set_active(true);
         });
-        println!("{:#?}", self.buttons);
         
         self.buttons.borrow_mut().push(button);
 
