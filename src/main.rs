@@ -12,8 +12,8 @@ fn build_ui(application: &gtk::Application) {
 
     let mut ntbk = notebook::Notebook::new();
     ntbk.create_tab("blaaaaaaa", gtk::Label::new(Some("blaaaaaa")).upcast());
-    ntbk.create_tab("blaaaaaaa", gtk::Label::new(Some("blaaaaaa")).upcast());
-    ntbk.create_tab("blaaaaaaa", gtk::Label::new(Some("blaaaaaa")).upcast());
+    ntbk.create_tab("blaaaaaaa", gtk::Label::new(Some("fooooooo")).upcast());
+    ntbk.create_tab("blaaaaaaa", gtk::Label::new(Some("baaaaaaz")).upcast());
     window.add(&ntbk.widget);
 
     window.show_all();
