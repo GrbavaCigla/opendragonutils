@@ -41,7 +41,7 @@ impl Notebook {
             x.set_active(true);
         });
         println!("{:#?}", self.buttons);
-        // println!("{:#?}", self);
+        
         self.buttons.borrow_mut().push(button);
 
         self.notebook
