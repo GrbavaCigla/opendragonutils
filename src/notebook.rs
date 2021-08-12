@@ -8,7 +8,7 @@ pub struct Notebook {
 
     button_box: gtk::Box,
     notebook: Arc<gtk::Notebook>,
-    buttons: Rc<RefCell<Vec<gtk::ToggleButton>>>,
+    buttons: Rc<RefCell<Vec<gtk::RadioButton>>>,
 
 }
 
@@ -32,8 +32,13 @@ impl Notebook {
     }
 
     pub fn create_tab(&mut self, title: &str, widget: gtk::Widget) {
-        let button = gtk::ToggleButton::with_label(title);
+        let button = gtk::RadioButton::with_label(title);
+        button.set_mode(false);
         self.button_box.pack_start(&button, true, true, 2);
+
+        if !self.buttons.borrow().is_empty() {
+            button.join_group(Some(&self.buttons.borrow()[0]));
+        }
 
         let buttons = Rc::clone(&self.buttons);
         let notebook = self.notebook.clone();
@@ -42,8 +47,7 @@ impl Notebook {
             for (i, btn) in buttons.borrow().iter().enumerate() {
                 if x == btn {
                     c = i;
-                } else {
-                    btn.set_active(false);
+                    break;
                 }
             }
             notebook.set_current_page(Some(c as u32));
