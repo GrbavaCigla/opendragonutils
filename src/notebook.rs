@@ -1,4 +1,4 @@
-use std::{cell::RefCell, rc::Rc, sync::Arc};
+use std::{cell::RefCell, rc::Rc};
 
 use gtk::prelude::*;
 
@@ -7,7 +7,7 @@ pub struct Notebook {
     pub widget: gtk::Box,
 
     button_box: gtk::Box,
-    notebook: Arc<gtk::Notebook>,
+    notebook: Rc<gtk::Notebook>,
     buttons: Rc<RefCell<Vec<gtk::RadioButton>>>,
 
 }
@@ -16,7 +16,7 @@ impl Notebook {
     pub fn new() -> Self {
         let main_box = gtk::Box::new(gtk::Orientation::Vertical, 12);
         let button_box = gtk::Box::new(gtk::Orientation::Horizontal, 12);
-        let notebook = Arc::new(gtk::Notebook::new());
+        let notebook = Rc::new(gtk::Notebook::new());
         notebook.set_show_tabs(false);
         notebook.set_show_border(false);
 
@@ -41,7 +41,7 @@ impl Notebook {
         }
 
         let buttons = Rc::clone(&self.buttons);
-        let notebook = self.notebook.clone();
+        let notebook = Rc::clone(&self.notebook);
         button.connect_clicked(move |x| {
             let mut c = 0;
             for (i, btn) in buttons.borrow().iter().enumerate() {

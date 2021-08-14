@@ -1,13 +1,8 @@
 use gtk::prelude::*;
 
+mod macros;
 mod notebook;
-
-fn light_mode_ui() -> gtk::Widget {
-    let main_box = gtk::Box::new(gtk::Orientation::Horizontal, 12);
-    
-    return main_box.upcast();
-}
-
+mod settings;
 
 fn build_ui(application: &gtk::Application) {
     let window = gtk::ApplicationWindow::new(application);
@@ -18,11 +13,44 @@ fn build_ui(application: &gtk::Application) {
     window.set_default_size(800, 600);
 
     let mut ntbk = notebook::Notebook::new();
-    ntbk.create_tab("General", gtk::Label::new(Some("Not yet implemented!")).upcast());
-    ntbk.create_tab("DPI", gtk::Label::new(Some("Not yet implemented!")).upcast());
-    ntbk.create_tab("Lighting", light_mode_ui());
-    window.add(&ntbk.widget);
 
+    ntbk.create_tab(
+        "General",
+        gtk::Label::new(Some("Not yet implemented!")).upcast(),
+    );
+    ntbk.create_tab(
+        "DPI",
+        gtk::Label::new(Some("Not yet implemented!")).upcast(),
+    );
+
+
+    let brightness_scale = gtk::Scale::with_range(gtk::Orientation::Horizontal, 1.0, 9.0, 1.0);
+    brightness_scale.set_size_request(200, -1);
+
+    ntbk.create_tab(
+        "Lighting",
+        settings::settings_view_ui(&vec![
+            settings::setting_ui(
+                "Lighting mode",
+                comboboxtext!(
+                    "Breathing",
+                    "Rainbow",
+                    "Full lighted",
+                    "Wave",
+                    "Go without trace",
+                    "Reactive",
+                    "Flash"
+                )
+                .upcast(),
+            ),
+            settings::setting_ui(
+                "Brightness",
+                brightness_scale.upcast(),
+            ),
+        ]),
+    );
+
+    window.add(&ntbk.widget);
     window.show_all();
 }
 
