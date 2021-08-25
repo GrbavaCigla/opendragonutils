@@ -1,0 +1,11 @@
+[package]
+name = "opendragui"
+version = "0.1.0"
+authors = ["GrbavaCigla <alexa.ognjanovic@protonmail.com>"]
+edition = "2018"
+
+[dependencies]
+gtk = "0.14.1"
+
+[dependencies.core]
+path = "../core"

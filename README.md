@@ -1,2 +1,2 @@
-# opendragui
-Gtk GUI for GrbavaCigla/opendragon redragon reverse engineered drivers
+# OpenDragonUtils
+Utilities for [GrbavaCigla/opendragon](https://github.com/GrbavaCigla/opendragon) reverse-engineered driver.
