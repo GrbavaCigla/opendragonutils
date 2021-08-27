@@ -1,5 +1,4 @@
 use std::error::Error;
-use std::io::ErrorKind;
 use std::path::PathBuf;
 use std::u16;
 
@@ -63,7 +62,7 @@ pub fn list_redragon_devices() -> Result<Vec<UsbDevice>, Box<dyn Error>> {
     for device in enumerator.scan_devices()? {
         let device = match UsbDevice::from(device) {
             Ok(dev) => dev,
-            Err(_) => continue
+            Err(_) => continue,
         };
 
         if holtek_vendor == device.vendor_id && product_ids.contains(&device.product_id) {
